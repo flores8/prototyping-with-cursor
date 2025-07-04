@@ -1,6 +1,5 @@
 import Link from "next/link";
 import styles from './styles/home.module.css';
-import { instrumentSans } from './fonts';
 
 export default function Home() {
   // Add your prototypes to this array
@@ -24,9 +23,12 @@ export default function Home() {
   ];
 
   return (
-    <div className={`${styles.container} ${instrumentSans.className}`}>
+    <div className={styles.container}>
       <header className={styles.header}>
         <h1>Lauralee's prototypes</h1>
+        <p className={styles.subtitle}>
+          A curated collection of interactive prototypes exploring design, technology, and user experience.
+        </p>
       </header>
 
       <main>
