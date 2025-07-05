@@ -754,3 +754,140 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* CSS Code Display Styles */
+.cssToggle {
+  margin-top: 2rem;
+  text-align: center;
+}
+
+.cssToggleButton {
+  padding: 1rem 2rem;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 600;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.cssToggleButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+.cssCodeContainer {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.cssCodeHeader {
+  background: linear-gradient(45deg, #2c3e50, #34495e);
+  padding: 1.5rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cssCodeHeader h3 {
+  color: white;
+  margin: 0 0 0.5rem 0;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+}
+
+.cssCodeHeader p {
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+}
+
+.cssCode {
+  margin: 0;
+  padding: 2rem;
+  background: #1e1e1e;
+  color: #d4d4d4;
+  font-family: 'Courier New', 'Monaco', 'Menlo', monospace;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  max-height: 500px;
+  overflow-y: auto;
+}
+
+.cssCode code {
+  font-family: inherit;
+  color: inherit;
+}
+
+/* Syntax highlighting for CSS */
+.cssCode .selector {
+  color: #569cd6;
+}
+
+.cssCode .property {
+  color: #9cdcfe;
+}
+
+.cssCode .value {
+  color: #ce9178;
+}
+
+.cssCode .comment {
+  color: #6a9955;
+}
+
+/* Scrollbar styling for code container */
+.cssCode::-webkit-scrollbar {
+  width: 8px;
+}
+
+.cssCode::-webkit-scrollbar-track {
+  background: #2d2d2d;
+}
+
+.cssCode::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}
+
+.cssCode::-webkit-scrollbar-thumb:hover {
+  background: #777;
+}
+
+/* Mobile responsive for code display */
+@media (max-width: 768px) {
+  .cssCodeContainer {
+    margin: 0 1rem 2rem;
+  }
+  
+  .cssCode {
+    padding: 1.5rem;
+    font-size: 0.8rem;
+    max-height: 400px;
+  }
+  
+  .cssCodeHeader {
+    padding: 1rem;
+  }
+  
+  .cssCodeHeader h3 {
+    font-size: 1.1rem;
+  }
+  
+  .cssCodeHeader p {
+    font-size: 0.85rem;
+  }
+}
