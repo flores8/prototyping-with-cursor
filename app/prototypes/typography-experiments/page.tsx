@@ -33,10 +33,10 @@ export default function TypographyExperiments() {
     { id: 'neon', name: 'Neon Glow' },
     { id: 'typewriter', name: 'Typewriter' },
     { id: 'skewed', name: '3D Skewed' },
+    { id: 'glitch', name: 'Glitch Effect' },
     { id: 'gradient', name: 'Gradient Text' },
     { id: 'wavy', name: 'Wavy Text' },
     { id: 'circular', name: 'Circular Text' },
-    { id: 'glitch', name: 'Glitch Effect' },
     { id: 'holographic', name: 'Holographic' },
     { id: 'matrix', name: 'Matrix Rain' },
     { id: 'bubble', name: 'Bubble Text' },
@@ -201,50 +201,135 @@ export default function TypographyExperiments() {
   color: white;
   font-family: 'Roboto Flex', sans-serif;
   font-variation-settings: 'wght' 900;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
 .glitchBase {
   position: relative;
   z-index: 1;
+  animation: glitchBase 4s infinite;
 }
 
 .glitchLayer1,
-.glitchLayer2 {
+.glitchLayer2,
+.glitchLayer3 {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  animation: glitch 2s infinite;
+  animation: glitchRGB 3s infinite;
 }
 
 .glitchLayer1 {
-  color: #ff6b6b;
+  color: #ff0000;
   z-index: 2;
   animation-delay: 0.1s;
+  mix-blend-mode: screen;
 }
 
 .glitchLayer2 {
-  color: #4ecdc4;
+  color: #00ff00;
   z-index: 3;
   animation-delay: 0.2s;
+  mix-blend-mode: screen;
 }
 
-@keyframes glitch {
-  0%, 100% {
+.glitchLayer3 {
+  color: #0000ff;
+  z-index: 4;
+  animation-delay: 0.3s;
+  mix-blend-mode: screen;
+}
+
+/* Scan lines effect */
+.glitchText::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(255, 255, 255, 0.1) 2px,
+    rgba(255, 255, 255, 0.1) 4px
+  );
+  pointer-events: none;
+  z-index: 5;
+  animation: scanLines 0.1s infinite;
+}
+
+@keyframes glitchBase {
+  0%, 90%, 100% {
     transform: translate(0);
+    opacity: 1;
   }
-  20% {
-    transform: translate(-2px, 2px);
+  91% {
+    transform: translate(-10px, 5px) skew(-5deg);
+    opacity: 0.8;
   }
-  40% {
-    transform: translate(-2px, -2px);
+  92% {
+    transform: translate(8px, -3px) skew(3deg);
+    opacity: 0.9;
   }
-  60% {
-    transform: translate(2px, 2px);
+  93% {
+    transform: translate(-5px, 2px) skew(-2deg);
+    opacity: 0.7;
   }
-  80% {
-    transform: translate(2px, -2px);
+  94% {
+    transform: translate(3px, -1px) skew(1deg);
+    opacity: 0.8;
+  }
+  95% {
+    transform: translate(-2px, 1px);
+    opacity: 0.9;
+  }
+  96% {
+    transform: translate(1px, -1px);
+    opacity: 1;
+  }
+}
+
+@keyframes glitchRGB {
+  0%, 90%, 100% {
+    transform: translate(0);
+    opacity: 0;
+  }
+  91% {
+    transform: translate(-15px, 0) skew(-10deg);
+    opacity: 0.8;
+  }
+  92% {
+    transform: translate(12px, 0) skew(8deg);
+    opacity: 0.6;
+  }
+  93% {
+    transform: translate(-8px, 0) skew(-5deg);
+    opacity: 0.7;
+  }
+  94% {
+    transform: translate(5px, 0) skew(3deg);
+    opacity: 0.5;
+  }
+  95% {
+    transform: translate(-3px, 0) skew(-2deg);
+    opacity: 0.6;
+  }
+  96% {
+    transform: translate(2px, 0) skew(1deg);
+    opacity: 0.4;
+  }
+}
+
+@keyframes scanLines {
+  0%, 100% {
+    opacity: 0.1;
+  }
+  50% {
+    opacity: 0.3;
   }
 }`,
     holographic: `.holographicText {
@@ -541,6 +626,7 @@ export default function TypographyExperiments() {
               <span className={styles.glitchBase}>{inputText}</span>
               <span className={styles.glitchLayer1}>{inputText}</span>
               <span className={styles.glitchLayer2}>{inputText}</span>
+              <span className={styles.glitchLayer3}>{inputText}</span>
             </div>
           )}
 
