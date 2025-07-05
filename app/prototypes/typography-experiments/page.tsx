@@ -139,30 +139,30 @@ export default function TypographyExperiments() {
 }`,
     wavy: `.wavyText {
   font-size: 4rem;
-  font-weight: 900;
+  font-weight: 400;
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .wavyText span {
   display: inline-block;
-  animation: wave 2s ease-in-out infinite;
+  animation: wave 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
   font-family: 'Roboto Flex', sans-serif;
-  font-variation-settings: 'wght' 900;
+  font-variation-settings: 'wght' 400;
 }
 
 @keyframes wave {
   0%, 100% {
-    transform: translateY(0) rotate(0deg);
+    transform: translateY(0) rotate(0deg) scale(1);
   }
   25% {
-    transform: translateY(-20px) rotate(5deg);
+    transform: translateY(-30px) rotate(8deg) scale(1.05);
   }
   50% {
-    transform: translateY(-10px) rotate(-3deg);
+    transform: translateY(-15px) rotate(-6deg) scale(0.95);
   }
   75% {
-    transform: translateY(-15px) rotate(2deg);
+    transform: translateY(-25px) rotate(4deg) scale(1.02);
   }
 }`,
     circular: `.circularContainer {
