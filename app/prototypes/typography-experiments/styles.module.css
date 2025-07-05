@@ -56,7 +56,8 @@
 
 .header p {
   font-size: 1.2rem;
-  opacity: 0.9;
+  color: white;
+  opacity: 1;
 }
 
 .controls {
@@ -140,13 +141,18 @@
 .main {
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
   min-height: 60vh;
+  padding-top: 2rem;
 }
 
 .typographyDisplay {
   text-align: center;
   max-width: 90vw;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 400px;
 }
 
 /* Wavy Text Effect */
@@ -185,6 +191,8 @@
   height: 400px;
   margin: 0 auto;
   position: relative;
+  margin-top: 0;
+  padding: 20px;
 }
 
 .circularText {
@@ -192,8 +200,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 300px;
-  height: 300px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
 }
 
@@ -204,10 +212,10 @@
   color: white;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-family: 'Inter', sans-serif;
-  transform-origin: 150px 150px;
+  transform-origin: 140px 140px;
   left: 50%;
   top: 0;
-  transform: rotate(var(--angle, 0deg)) translateX(150px) rotate(calc(-1 * var(--angle, 0deg)));
+  transform: rotate(var(--angle, 0deg)) translateX(140px) rotate(calc(-1 * var(--angle, 0deg)));
 }
 
 @keyframes rotate {
@@ -695,7 +703,12 @@
   text-align: center;
   margin-top: 3rem;
   color: white;
-  opacity: 0.8;
+  opacity: 1;
+}
+
+.footer p {
+  color: white;
+  opacity: 1;
 }
 
 /* Responsive Design */
