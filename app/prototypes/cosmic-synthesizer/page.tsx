@@ -792,6 +792,10 @@ export default function CosmicSynthesizer() {
         className={styles.particleCanvas}
       />
       
+      <a href="/" className={styles.backButton}>
+        ← Back to Home
+      </a>
+      
       <div className={styles.header}>
         <h1>Cosmic Synthesizer</h1>
         <p>Press keys or use your keyboard to create ethereal sounds across two octaves</p>
