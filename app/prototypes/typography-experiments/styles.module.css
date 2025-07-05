@@ -195,9 +195,6 @@
   width: 300px;
   height: 300px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .circularText span {
@@ -208,7 +205,9 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   font-family: 'Inter', sans-serif;
   transform-origin: 150px 150px;
-  animation: rotate 10s linear infinite;
+  left: 50%;
+  top: 0;
+  transform: rotate(var(--angle, 0deg)) translateX(150px) rotate(calc(-1 * var(--angle, 0deg)));
 }
 
 @keyframes rotate {
@@ -405,6 +404,12 @@
   
   .circularText span {
     font-size: 1rem;
+    transform-origin: 100px 100px;
+  }
+  
+  /* Override the transform for mobile to use smaller radius */
+  .circularText span {
+    transform: rotate(var(--angle, 0deg)) translateX(100px) rotate(calc(-1 * var(--angle, 0deg))) !important;
     transform-origin: 100px 100px;
   }
   

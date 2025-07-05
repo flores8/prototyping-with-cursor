@@ -81,16 +81,21 @@ export default function TypographyExperiments() {
           {selectedEffect === 'circular' && (
             <div className={styles.circularContainer}>
               <div className={styles.circularText}>
-                {inputText.split('').map((char, index) => (
-                  <span
-                    key={index}
-                    style={{
-                      transform: `rotate(${(360 / inputText.length) * index}deg)`
-                    }}
-                  >
-                    {char === ' ' ? '\u00A0' : char}
-                  </span>
-                ))}
+                {inputText.split('').map((char, index) => {
+                  // Start from -135 degrees (top-left) and go clockwise to the right
+                  // Leave 20 degrees of space at the end (so text uses 340 degrees instead of 360)
+                  const angle = -135 + (340 / inputText.length) * index;
+                  return (
+                    <span
+                      key={index}
+                      style={{
+                        '--angle': `${angle}deg`
+                      } as React.CSSProperties}
+                    >
+                      {char === ' ' ? '\u00A0' : char}
+                    </span>
+                  );
+                })}
               </div>
             </div>
           )}
