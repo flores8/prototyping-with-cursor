@@ -15,6 +15,19 @@ export default function TypographyExperiments() {
   const [inputText, setInputText] = useState('Type something magical here');
   const [selectedEffect, setSelectedEffect] = useState('neon');
   const [showCSS, setShowCSS] = useState(false);
+  const [copyStatus, setCopyStatus] = useState('');
+
+  // Function to copy CSS to clipboard
+  const copyToClipboard = async (cssCode: string) => {
+    try {
+      await navigator.clipboard.writeText(cssCode);
+      setCopyStatus('Copied!');
+      setTimeout(() => setCopyStatus(''), 2000);
+    } catch (err) {
+      setCopyStatus('Failed to copy');
+      setTimeout(() => setCopyStatus(''), 2000);
+    }
+  };
 
   const effects = [
     { id: 'neon', name: 'Neon Glow' },
@@ -475,8 +488,16 @@ export default function TypographyExperiments() {
       {showCSS && (
         <div className={styles.cssCodeContainer}>
           <div className={styles.cssCodeHeader}>
-            <h3>CSS Code for "{effects.find(e => e.id === selectedEffect)?.name}" Effect</h3>
-            <p>Copy this CSS to recreate the effect in your own project!</p>
+            <div className={styles.cssCodeHeaderContent}>
+              <h3>CSS Code for "{effects.find(e => e.id === selectedEffect)?.name}" Effect</h3>
+              <p>Copy this CSS to recreate the effect in your own project!</p>
+            </div>
+            <button
+              onClick={() => copyToClipboard(cssCode[selectedEffect as keyof typeof cssCode])}
+              className={styles.copyButton}
+            >
+              {copyStatus || 'Copy CSS'}
+            </button>
           </div>
           <pre className={styles.cssCode}>
             <code>{cssCode[selectedEffect as keyof typeof cssCode]}</code>
