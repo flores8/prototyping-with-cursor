@@ -19,6 +19,11 @@ export default function Home() {
       description: 'An otherworldly digital piano with floating keys and particle effects',
       path: '/prototypes/cosmic-piano'
     },
+    {
+      title: 'Typography Experiments',
+      description: 'Interactive typography generator with wavy text, circular layouts, and 3D effects',
+      path: '/prototypes/typography-experiments'
+    },
     // Add your new prototypes here like this:
     // {
     //   title: 'Your new prototype',
