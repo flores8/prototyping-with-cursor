@@ -40,8 +40,8 @@ export default function TypographyExperiments() {
     { id: 'holographic', name: 'Holographic' },
     { id: 'gradient2', name: 'Gradient #2' },
     { id: '3d', name: '3D Text' },
-    { id: 'fire', name: 'Fire Text' },
-    { id: 'morphing', name: 'Morphing' }
+    { id: 'blurry', name: 'Blurry Text' },
+    { id: 'chaos', name: 'Chaos' }
   ];
 
   // CSS code snippets for each effect
@@ -442,49 +442,20 @@ export default function TypographyExperiments() {
     0 20px 20px rgba(0,0,0,.15),
     0 0 20px rgba(255,255,255,0.3);
 }`,
-    fire: `.fireText {
+    blurry: `.blurryText {
   font-size: 4rem;
   font-weight: 900;
-  background: linear-gradient(45deg, #ff4500, #ff8c00, #ffd700, #ff4500);
-  background-size: 300% 300%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: fireFlicker 0.5s ease-in-out infinite;
+  color: white;
+  filter: blur(3px);
   font-family: 'Inter', sans-serif;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  transition: filter 0.3s ease;
 }
 
-.fireText::before {
-  content: attr(data-text);
-  position: absolute;
-  background: linear-gradient(45deg, #ff0000, #ff6600, #ffcc00);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: fireGlow 0.3s ease-in-out infinite;
-  z-index: -1;
-}
-
-@keyframes fireFlicker {
-  0%, 100% {
-    background-position: 0% 50%;
-    filter: brightness(1);
-  }
-  25% {
-    background-position: 25% 50%;
-    filter: brightness(1.1);
-  }
-  50% {
-    background-position: 50% 50%;
-    filter: brightness(0.9);
-  }
-  75% {
-    background-position: 75% 50%;
-    filter: brightness(1.2);
-  }
+.blurryText:hover {
+  filter: blur(1px);
 }`,
-    morphing: `.morphingContainer {
+    chaos: `.chaosContainer {
   font-size: 4rem;
   font-weight: 900;
   color: white;
@@ -492,18 +463,18 @@ export default function TypographyExperiments() {
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-.morphingChar {
-  display: inline-block;
-  animation: morphing 3s ease-in-out infinite;
-  background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+.chaosText {
+  background: linear-gradient(135deg, rgba(255, 255, 196, 1.000) 0.000%, rgba(255, 97, 100, 1.000) 50.000%, rgba(176, 0, 18, 1.000) 100.000%);
   background-size: 300% 300%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: chaos 3s ease-in-out infinite;
   position: relative;
+  text-align: center;
 }
 
-@keyframes morphing {
+@keyframes chaos {
   0%, 100% {
     transform: scale(1) rotate(0deg);
     background-position: 0% 50%;
@@ -668,26 +639,16 @@ export default function TypographyExperiments() {
             </div>
           )}
 
-          {selectedEffect === 'fire' && (
-            <div className={styles.fireText}>
+          {selectedEffect === 'blurry' && (
+            <div className={styles.blurryText}>
               {inputText}
             </div>
           )}
 
-          {selectedEffect === 'morphing' && (
-            <div className={styles.morphingContainer}>
-              <div className={styles.morphingText}>
-                {inputText.split('').map((char, index) => (
-                  <span
-                    key={index}
-                    className={styles.morphingChar}
-                    style={{
-                      animationDelay: `${index * 0.1}s`
-                    }}
-                  >
-                    {char === ' ' ? '\u00A0' : char}
-                  </span>
-                ))}
+          {selectedEffect === 'chaos' && (
+            <div className={styles.chaosContainer}>
+              <div className={styles.chaosText}>
+                {inputText}
               </div>
             </div>
           )}
