@@ -1,0 +1,350 @@
+/* Cosmic Synthesizer Styles */
+.container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* Animated background stars */
+.container::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(2px 2px at 20px 30px, #C5BFFF, transparent),
+    radial-gradient(2px 2px at 40px 70px, #B8A9FF, transparent),
+    radial-gradient(1px 1px at 90px 40px, #AB93FF, transparent),
+    radial-gradient(1px 1px at 130px 80px, #9E7DFF, transparent),
+    radial-gradient(2px 2px at 160px 30px, #9167FF, transparent);
+  background-repeat: repeat;
+  background-size: 200px 100px;
+  animation: twinkle 4s ease-in-out infinite;
+  z-index: 0;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.8; }
+}
+
+.particleCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.waveformContainer {
+  position: absolute;
+  width: 100vw;
+  height: 200px;
+  left: calc(-50vw + 50%);
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 0;
+  overflow: hidden;
+  background: transparent;
+  border: none;
+  z-index: 1;
+}
+
+.waveformCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+  z-index: 10;
+  position: relative;
+}
+
+.header h1 {
+  font-size: clamp(2.5rem, 8vw, 4rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #C5BFFF, #9167FF, #C5BFFF);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease-in-out infinite;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 30px rgba(197, 191, 255, 0.5);
+}
+
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+.header p {
+  color: #C5BFFF;
+  font-size: 1.1rem;
+  opacity: 0.8;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.synthesizer {
+  position: relative;
+  z-index: 10;
+  margin-bottom: 3rem;
+  min-height: 250px;
+}
+
+.keysContainer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  position: relative;
+  max-width: 1000px;
+  --white-key-width: 60px;
+  --black-key-width: 40px;
+  z-index: 20;
+}
+
+.key {
+  width: 60px;
+  height: 200px;
+  background: linear-gradient(135deg, var(--key-color), rgba(255, 255, 255, 0.1));
+  border: 2px solid var(--key-color);
+  border-radius: 8px 8px 20px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 
+    0 8px 32px rgba(197, 191, 255, 0.2),
+    0 0 0 1px rgba(197, 191, 255, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  margin: 0 -1px;
+}
+
+.key[data-black="true"] {
+  width: var(--black-key-width);
+  height: 120px;
+  background: linear-gradient(135deg, #2D1B69, rgba(0, 0, 0, 0.8));
+  border: 2px solid #2D1B69;
+  border-radius: 8px 8px 12px 12px;
+  position: absolute;
+  z-index: 2;
+  margin: 0;
+  top: 0;
+  left: var(--black-key-left);
+  bottom: 0;
+  box-shadow: 
+    0 4px 16px rgba(45, 27, 105, 0.4),
+    0 0 0 1px rgba(45, 27, 105, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+
+
+.key:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 
+    0 15px 40px rgba(197, 191, 255, 0.4),
+    0 0 0 2px rgba(197, 191, 255, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.key.active {
+  transform: translateY(5px) scale(0.95);
+  box-shadow: 
+    0 5px 20px rgba(197, 191, 255, 0.6),
+    0 0 0 3px rgba(197, 191, 255, 0.5),
+    inset 0 2px 0 rgba(255, 255, 255, 0.4);
+}
+
+.keyLabel {
+  color: white;
+  font-weight: 700;
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  z-index: 2;
+  position: relative;
+}
+
+.keyGlow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  border-radius: 20px;
+  background: radial-gradient(ellipse at center, var(--key-color) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+}
+
+.key.active .keyGlow {
+  opacity: 0.3;
+  animation: pulse 0.5s ease-in-out;
+}
+
+@keyframes pulse {
+  0% { opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { opacity: 0.3; }
+}
+
+.controls {
+  position: relative;
+  z-index: 10;
+  margin-bottom: 2rem;
+}
+
+.status {
+  text-align: center;
+}
+
+.playingIndicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  color: #C5BFFF;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.pulse {
+  width: 12px;
+  height: 12px;
+  background: #C5BFFF;
+  border-radius: 50%;
+  animation: pulseDot 1s ease-in-out infinite;
+}
+
+@keyframes pulseDot {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.7; }
+}
+
+.idleIndicator {
+  color: rgba(197, 191, 255, 0.6);
+  font-size: 1.1rem;
+}
+
+.instructions {
+  position: relative;
+  z-index: 10;
+  background: rgba(197, 191, 255, 0.1);
+  border: 1px solid rgba(197, 191, 255, 0.2);
+  border-radius: 16px;
+  padding: 1.5rem;
+  max-width: 500px;
+  backdrop-filter: blur(10px);
+}
+
+.instructions h3 {
+  color: #C5BFFF;
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.instructions ul {
+  color: rgba(197, 191, 255, 0.8);
+  list-style: none;
+  padding: 0;
+}
+
+.instructions li {
+  margin-bottom: 0.5rem;
+  padding-left: 1.5rem;
+  position: relative;
+}
+
+.instructions li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: #C5BFFF;
+  font-size: 0.8rem;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .waveformContainer {
+    height: 150px;
+    width: 100vw;
+    left: calc(-50vw + 50%);
+  }
+  
+  .keysContainer {
+    max-width: 600px;
+    --white-key-width: 45px;
+    --black-key-width: 30px;
+  }
+  
+  .key {
+    width: 45px;
+    height: 150px;
+  }
+  
+  .key[data-black="true"] {
+    width: 30px;
+    height: 90px;
+  }
+  
+  .keyLabel {
+    font-size: 0.8rem;
+  }
+  
+  .header h1 {
+    font-size: clamp(2rem, 10vw, 3rem);
+  }
+}
+
+@media (max-width: 480px) {
+  .waveformContainer {
+    height: 120px;
+    width: 100vw;
+    left: calc(-50vw + 50%);
+  }
+  
+  .keysContainer {
+    max-width: 400px;
+    --white-key-width: 35px;
+    --black-key-width: 25px;
+  }
+  
+  .key {
+    width: 35px;
+    height: 120px;
+  }
+  
+  .key[data-black="true"] {
+    width: 25px;
+    height: 70px;
+  }
+  
+  .keyLabel {
+    font-size: 0.7rem;
+    margin-bottom: 0.5rem;
+  }
+} 

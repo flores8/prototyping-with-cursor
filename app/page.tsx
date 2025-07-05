@@ -14,6 +14,11 @@ export default function Home() {
       description: 'An interactive button that creates a colorful confetti explosion',
       path: '/prototypes/confetti-button'
     },
+    {
+      title: 'Cosmic Synthesizer',
+      description: 'An otherworldly digital piano with floating keys and particle effects',
+      path: '/prototypes/cosmic-synthesizer'
+    },
     // Add your new prototypes here like this:
     // {
     //   title: 'Your new prototype',
