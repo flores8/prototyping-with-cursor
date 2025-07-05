@@ -21,7 +21,13 @@ export default function TypographyExperiments() {
     { id: 'skewed', name: '3D Skewed' },
     { id: 'gradient', name: 'Gradient Text' },
     { id: 'glitch', name: 'Glitch Effect' },
-    { id: 'neon', name: 'Neon Glow' }
+    { id: 'neon', name: 'Neon Glow' },
+    { id: 'typewriter', name: 'Typewriter' },
+    { id: 'holographic', name: 'Holographic' },
+    { id: 'matrix', name: 'Matrix Rain' },
+    { id: 'bubble', name: 'Bubble Text' },
+    { id: 'fire', name: 'Fire Text' },
+    { id: 'morphing', name: 'Morphing Text' }
   ];
 
   return (
@@ -121,8 +127,85 @@ export default function TypographyExperiments() {
           )}
 
           {selectedEffect === 'neon' && (
-            <div className={styles.neonText}>
+            <div className={styles.neonText} data-text={inputText}>
               {inputText}
+            </div>
+          )}
+
+          {selectedEffect === 'typewriter' && (
+            <div className={styles.typewriterText}>
+              {inputText.split('').map((char, index) => (
+                <span
+                  key={index}
+                  style={{
+                    animationDelay: `${index * 0.1}s`
+                  }}
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {selectedEffect === 'holographic' && (
+            <div className={styles.holographicText}>
+              {inputText}
+            </div>
+          )}
+
+          {selectedEffect === 'matrix' && (
+            <div className={styles.matrixContainer}>
+              {inputText.split('').map((char, index) => (
+                <span
+                  key={index}
+                  className={styles.matrixChar}
+                  style={{
+                    animationDelay: `${index * 0.2}s`
+                  }}
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {selectedEffect === 'bubble' && (
+            <div className={styles.bubbleContainer}>
+              {inputText.split('').map((char, index) => (
+                <span
+                  key={index}
+                  className={styles.bubbleChar}
+                  style={{
+                    animationDelay: `${index * 0.1}s`
+                  }}
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </span>
+              ))}
+            </div>
+          )}
+
+          {selectedEffect === 'fire' && (
+            <div className={styles.fireText}>
+              {inputText}
+            </div>
+          )}
+
+          {selectedEffect === 'morphing' && (
+            <div className={styles.morphingContainer}>
+              <div className={styles.morphingText}>
+                {inputText.split('').map((char, index) => (
+                  <span
+                    key={index}
+                    className={styles.morphingChar}
+                    style={{
+                      animationDelay: `${index * 0.1}s`
+                    }}
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </span>
+                ))}
+              </div>
             </div>
           )}
         </div>
