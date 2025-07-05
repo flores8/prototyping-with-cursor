@@ -797,11 +797,11 @@ export default function CosmicSynthesizer() {
       </a>
       
       <div className={styles.header}>
-        <h1>Cosmic Synthesizer</h1>
+        <h1>Cosmic Piano</h1>
         <p>Press keys or use your keyboard to create ethereal sounds across two octaves</p>
       </div>
 
-      <div className={styles.synthesizer}>
+      <div className={styles.piano}>
         <div className={styles.waveformContainer}>
           <canvas
             ref={waveformCanvasRef}

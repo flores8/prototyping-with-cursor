@@ -15,9 +15,9 @@ export default function Home() {
       path: '/prototypes/confetti-button'
     },
     {
-      title: 'Cosmic Synthesizer',
+      title: 'Cosmic Piano',
       description: 'An otherworldly digital piano with floating keys and particle effects',
-      path: '/prototypes/cosmic-synthesizer'
+      path: '/prototypes/cosmic-piano'
     },
     // Add your new prototypes here like this:
     // {
