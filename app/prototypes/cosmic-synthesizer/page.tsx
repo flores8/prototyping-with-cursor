@@ -37,21 +37,35 @@ export default function CosmicSynthesizer() {
   const analyserRef = useRef<AnalyserNode | null>(null);
   const audioDataRef = useRef<Float32Array>(new Float32Array(1024));
 
-  // Define the cosmic scale (pentatonic for a more ethereal sound)
+  // Define the cosmic scale with two octaves for more song versatility
   const keys: Key[] = [
-    { note: 'C', frequency: 261.63, color: '#C5BFFF', isBlack: false },
-    { note: 'C#', frequency: 277.18, color: '#2D1B69', isBlack: true },
-    { note: 'D', frequency: 293.66, color: '#B8A9FF', isBlack: false },
-    { note: 'D#', frequency: 311.13, color: '#2D1B69', isBlack: true },
-    { note: 'E', frequency: 329.63, color: '#AB93FF', isBlack: false },
-    { note: 'F', frequency: 349.23, color: '#9E7DFF', isBlack: false },
-    { note: 'F#', frequency: 369.99, color: '#2D1B69', isBlack: true },
-    { note: 'G', frequency: 392.00, color: '#9167FF', isBlack: false },
-    { note: 'G#', frequency: 415.30, color: '#2D1B69', isBlack: true },
-    { note: 'A', frequency: 440.00, color: '#8451FF', isBlack: false },
-    { note: 'A#', frequency: 466.16, color: '#2D1B69', isBlack: true },
-    { note: 'B', frequency: 493.88, color: '#773BFF', isBlack: false },
-    { note: 'C2', frequency: 523.25, color: '#6A25FF', isBlack: false },
+    // Lower octave (C3-B3) - deeper, richer sounds for bass and accompaniment
+    { note: 'C3', frequency: 130.81, color: '#4A3B8A', isBlack: false },
+    { note: 'C#3', frequency: 138.59, color: '#1A0F3A', isBlack: true },
+    { note: 'D3', frequency: 146.83, color: '#5A4B9A', isBlack: false },
+    { note: 'D#3', frequency: 155.56, color: '#1A0F3A', isBlack: true },
+    { note: 'E3', frequency: 164.81, color: '#6A5BAA', isBlack: false },
+    { note: 'F3', frequency: 174.61, color: '#7A6BBA', isBlack: false },
+    { note: 'F#3', frequency: 185.00, color: '#1A0F3A', isBlack: true },
+    { note: 'G3', frequency: 196.00, color: '#8A7BCA', isBlack: false },
+    { note: 'G#3', frequency: 207.65, color: '#1A0F3A', isBlack: true },
+    { note: 'A3', frequency: 220.00, color: '#9A8BDA', isBlack: false },
+    { note: 'A#3', frequency: 233.08, color: '#1A0F3A', isBlack: true },
+    { note: 'B3', frequency: 246.94, color: '#AA9BEA', isBlack: false },
+    // Middle octave (C4-B4) - original keys, renamed for clarity
+    { note: 'C4', frequency: 261.63, color: '#C5BFFF', isBlack: false },
+    { note: 'C#4', frequency: 277.18, color: '#2D1B69', isBlack: true },
+    { note: 'D4', frequency: 293.66, color: '#B8A9FF', isBlack: false },
+    { note: 'D#4', frequency: 311.13, color: '#2D1B69', isBlack: true },
+    { note: 'E4', frequency: 329.63, color: '#AB93FF', isBlack: false },
+    { note: 'F4', frequency: 349.23, color: '#9E7DFF', isBlack: false },
+    { note: 'F#4', frequency: 369.99, color: '#2D1B69', isBlack: true },
+    { note: 'G4', frequency: 392.00, color: '#9167FF', isBlack: false },
+    { note: 'G#4', frequency: 415.30, color: '#2D1B69', isBlack: true },
+    { note: 'A4', frequency: 440.00, color: '#8451FF', isBlack: false },
+    { note: 'A#4', frequency: 466.16, color: '#2D1B69', isBlack: true },
+    { note: 'B4', frequency: 493.88, color: '#773BFF', isBlack: false },
+    { note: 'C5', frequency: 523.25, color: '#6A25FF', isBlack: false },
   ];
 
   // Initialize audio context and canvas
@@ -236,13 +250,22 @@ export default function CosmicSynthesizer() {
   }, []);
 
   const getBlackKeyPosition = (index: number) => {
-    // Map each black key to its proper position between white keys
+    // Simple approach: position each black key based on its position in the keyboard
+    // Each black key should be positioned between two white keys
+    
     const blackKeyPositions: { [key: number]: string } = {
-      1: 'calc(1 * var(--white-key-width) - var(--black-key-width) / 2)',   // C# between C and D
-      3: 'calc(2 * var(--white-key-width) - var(--black-key-width) / 2)',   // D# between D and E
-      6: 'calc(4 * var(--white-key-width) - var(--black-key-width) / 2)',   // F# between F and G
-      8: 'calc(5 * var(--white-key-width) - var(--black-key-width) / 2)',   // G# between G and A
-      10: 'calc(6 * var(--white-key-width) - var(--black-key-width) / 2)', // A# between A and B
+      // Lower octave (C3-B3)
+      1: 'calc(1 * var(--white-key-width) - var(--black-key-width) / 2)',   // C#3 between C3 and D3
+      3: 'calc(2 * var(--white-key-width) - var(--black-key-width) / 2)',   // D#3 between D3 and E3
+      6: 'calc(4 * var(--white-key-width) - var(--black-key-width) / 2)',   // F#3 between F3 and G3
+      8: 'calc(5 * var(--white-key-width) - var(--black-key-width) / 2)',   // G#3 between G3 and A3
+      10: 'calc(6 * var(--white-key-width) - var(--black-key-width) / 2)',  // A#3 between A3 and B3
+      // Middle octave (C4-C5) - offset by 7 white keys from lower octave
+      13: 'calc(8 * var(--white-key-width) - var(--black-key-width) / 2)',  // C#4 between C4 and D4
+      15: 'calc(9 * var(--white-key-width) - var(--black-key-width) / 2)',  // D#4 between D4 and E4
+      18: 'calc(11 * var(--white-key-width) - var(--black-key-width) / 2)', // F#4 between F4 and G4
+      20: 'calc(12 * var(--white-key-width) - var(--black-key-width) / 2)', // G#4 between G4 and A4
+      22: 'calc(13 * var(--white-key-width) - var(--black-key-width) / 2)', // A#4 between A4 and B4
     };
     
     return blackKeyPositions[index] || '0px';
@@ -331,9 +354,14 @@ export default function CosmicSynthesizer() {
   // Keyboard controls
   useEffect(() => {
     const keyMap: { [key: string]: Key } = {
-      'a': keys[0], 'w': keys[1], 's': keys[2], 'e': keys[3], 'd': keys[4],
-      'f': keys[5], 't': keys[6], 'g': keys[7], 'y': keys[8], 'h': keys[9],
-      'u': keys[10], 'j': keys[11], 'k': keys[12]
+      // Lower octave (C3-B3) - use number keys 1-0 and some symbols
+      '1': keys[0], '!': keys[1], '2': keys[2], '@': keys[3], '3': keys[4],
+      '4': keys[5], '#': keys[6], '5': keys[7], '$': keys[8], '6': keys[9],
+      '%': keys[10], '7': keys[11], '8': keys[12],
+      // Middle octave (C4-C5) - use letter keys A-K and W-U
+      'a': keys[13], 'w': keys[14], 's': keys[15], 'e': keys[16], 'd': keys[17],
+      'f': keys[18], 't': keys[19], 'g': keys[20], 'y': keys[21], 'h': keys[22],
+      'u': keys[23], 'j': keys[24], 'k': keys[25], 'l': keys[26]
     };
 
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -368,7 +396,7 @@ export default function CosmicSynthesizer() {
       
       <div className={styles.header}>
         <h1>Cosmic Synthesizer</h1>
-        <p>Press keys or use A-K and W-U on your keyboard to create ethereal sounds</p>
+        <p>Press keys or use your keyboard to create ethereal sounds across two octaves</p>
       </div>
 
       <div className={styles.synthesizer}>
@@ -428,10 +456,11 @@ export default function CosmicSynthesizer() {
         <h3>How to play:</h3>
         <ul>
           <li>Click or tap the floating keys</li>
-          <li>Use your keyboard: A, W, S, E, D, F, T, G, Y, H, U, J, K</li>
+          <li>Lower octave (C3-B3): Use number keys 1-8 and symbols !@#$%</li>
+          <li>Middle octave (C4-C5): Use letter keys A-L and W-U</li>
           <li>Watch the cosmic particles dance</li>
           <li>See the waveform visualization above</li>
-          <li>Create your own ethereal melodies</li>
+          <li>Create your own ethereal melodies across two octaves</li>
         </ul>
       </div>
     </div>
