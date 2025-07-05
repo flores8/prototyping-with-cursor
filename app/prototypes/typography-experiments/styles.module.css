@@ -585,33 +585,26 @@
   }
 }
 
-/* Matrix Rain Effect */
-.matrixContainer {
-  font-size: 3rem;
-  font-weight: 700;
-  font-family: 'Courier New', monospace;
-  color: #00ff00;
-  text-shadow: 0 0 10px #00ff00;
+/* Gradient #2 Effect */
+.gradient2Text {
+  font-size: 4rem;
+  font-weight: 900;
+  color: transparent;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-family: 'Inter', sans-serif;
+  padding: 1rem 2rem;
+  border-radius: 15px;
 }
 
-.matrixChar {
-  opacity: 0;
-  animation: matrixFall 2s ease-in forwards;
-}
-
-@keyframes matrixFall {
-  0% {
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0.8;
-    transform: translateY(0);
-  }
+/* When gradient2 is active, style the typographyDisplay container */
+.typographyDisplay:has(.gradient2Text) {
+  background-color: white;
+  border-radius: 15px;
+  padding: 1rem 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  min-height: auto;
 }
 
 /* Bubble Text Effect */

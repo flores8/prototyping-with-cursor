@@ -38,7 +38,7 @@ export default function TypographyExperiments() {
     { id: 'wavy', name: 'Wavy Text' },
     { id: 'circular', name: 'Circular Text' },
     { id: 'holographic', name: 'Holographic' },
-    { id: 'matrix', name: 'Matrix Rain' },
+    { id: 'gradient2', name: 'Gradient #2' },
     { id: 'bubble', name: 'Bubble Text' },
     { id: 'fire', name: 'Fire Text' },
     { id: 'morphing', name: 'Morphing' }
@@ -383,32 +383,25 @@ export default function TypographyExperiments() {
     background-position: 200% 0;
   }
 }`,
-    matrix: `.matrixContainer {
-  font-size: 3rem;
-  font-weight: 700;
-  font-family: 'Courier New', monospace;
-  color: #00ff00;
-  text-shadow: 0 0 10px #00ff00;
+    gradient2: `.gradient2Text {
+  font-size: 4rem;
+  font-weight: 900;
+  color: transparent;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #f5576c 75%, #4facfe 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  font-family: 'Inter', sans-serif;
+  padding: 1rem 2rem;
+  border-radius: 15px;
 }
 
-.matrixChar {
-  opacity: 0;
-  animation: matrixFall 2s ease-in forwards;
-}
-
-@keyframes matrixFall {
-  0% {
-    opacity: 0;
-    transform: translateY(-50px);
-  }
-  50% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-  100% {
-    opacity: 0.8;
-    transform: translateY(0);
-  }
+/* Container styling for white background */
+.typographyDisplay:has(.gradient2Text) {
+  background-color: white;
+  border-radius: 15px;
+  padding: 1rem 2rem;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  min-height: auto;
 }`,
     bubble: `.bubbleContainer {
   font-size: 3rem;
@@ -657,19 +650,9 @@ export default function TypographyExperiments() {
             </div>
           )}
 
-          {selectedEffect === 'matrix' && (
-            <div className={styles.matrixContainer}>
-              {inputText.split('').map((char, index) => (
-                <span
-                  key={index}
-                  className={styles.matrixChar}
-                  style={{
-                    animationDelay: `${index * 0.2}s`
-                  }}
-                >
-                  {char === ' ' ? '\u00A0' : char}
-                </span>
-              ))}
+          {selectedEffect === 'gradient2' && (
+            <div className={styles.gradient2Text}>
+              {inputText}
             </div>
           )}
 
