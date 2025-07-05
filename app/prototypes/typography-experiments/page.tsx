@@ -28,7 +28,7 @@ export default function TypographyExperiments() {
     { id: 'matrix', name: 'Matrix Rain' },
     { id: 'bubble', name: 'Bubble Text' },
     { id: 'fire', name: 'Fire Text' },
-    { id: 'morphing', name: 'Morphing Text' }
+    { id: 'morphing', name: 'Morphing' }
   ];
 
   // CSS code snippets for each effect
