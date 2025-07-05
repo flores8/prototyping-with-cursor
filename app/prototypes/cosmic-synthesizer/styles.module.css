@@ -156,8 +156,6 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
-
-
 .key:hover {
   transform: translateY(-5px) scale(1.05);
   box-shadow: 
@@ -209,9 +207,19 @@
 }
 
 .controls {
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
   z-index: 10;
-  margin-bottom: 2rem;
+  position: relative;
+}
+
+.controlButtons {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .status {
@@ -318,6 +326,37 @@
   .header h1 {
     font-size: clamp(2rem, 10vw, 3rem);
   }
+
+  .settingsPanel {
+    padding: 1.5rem;
+    margin: 0.5rem 0;
+  }
+
+  .settingsPanel h3 {
+    font-size: 1.3rem;
+  }
+
+  .settingGroup label {
+    font-size: 0.9rem;
+  }
+
+  .controlButtons {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .instructionsPanel {
+    padding: 1.5rem;
+    margin: 0.5rem 0;
+  }
+
+  .instructionsPanel h3 {
+    font-size: 1.3rem;
+  }
+
+  .instructionsPanel li {
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 480px) {
@@ -347,4 +386,233 @@
     font-size: 0.7rem;
     margin-bottom: 0.5rem;
   }
+
+  .settingsPanel {
+    padding: 1rem;
+    margin: 0.5rem 0;
+  }
+
+  .settingsPanel h3 {
+    font-size: 1.2rem;
+  }
+
+  .settingGroup label {
+    font-size: 0.85rem;
+  }
+
+  .settingGroup select,
+  .settingGroup input[type="range"] {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  .instructionsPanel {
+    padding: 1rem;
+    margin: 0.5rem 0;
+  }
+
+  .instructionsPanel h3 {
+    font-size: 1.2rem;
+  }
+
+  .instructionsPanel li {
+    font-size: 0.85rem;
+  }
+}
+
+.settingsButton {
+  background: linear-gradient(135deg, #C5BFFF, #9167FF);
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  color: #0a0a0a;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(197, 191, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.settingsButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(197, 191, 255, 0.5);
+}
+
+.settingsButton:active {
+  transform: translateY(0);
+}
+
+.instructionsButton {
+  background: linear-gradient(135deg, #AB93FF, #8451FF);
+  border: none;
+  border-radius: 25px;
+  padding: 12px 24px;
+  color: #0a0a0a;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(171, 147, 255, 0.3);
+  backdrop-filter: blur(10px);
+}
+
+.instructionsButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(171, 147, 255, 0.5);
+}
+
+.instructionsButton:active {
+  transform: translateY(0);
+}
+
+.settingsPanel {
+  background: rgba(26, 26, 46, 0.9);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(197, 191, 255, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 1rem 0;
+  max-width: 600px;
+  width: 100%;
+  z-index: 10;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.settingsPanel h3 {
+  color: #C5BFFF;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(197, 191, 255, 0.5);
+}
+
+.settingGroup {
+  margin-bottom: 1.5rem;
+}
+
+.settingGroup label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  color: #C5BFFF;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.settingGroup select,
+.settingGroup input[type="range"] {
+  background: rgba(197, 191, 255, 0.1);
+  border: 2px solid rgba(197, 191, 255, 0.3);
+  border-radius: 10px;
+  padding: 8px 12px;
+  color: #C5BFFF;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.settingGroup select {
+  cursor: pointer;
+}
+
+.settingGroup select:focus,
+.settingGroup input[type="range"]:focus {
+  outline: none;
+  border-color: #9167FF;
+  box-shadow: 0 0 15px rgba(145, 103, 255, 0.3);
+}
+
+.settingGroup select option {
+  background: #1a1a2e;
+  color: #C5BFFF;
+}
+
+.settingGroup input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  background: linear-gradient(90deg, #C5BFFF, #9167FF);
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+}
+
+.settingGroup input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  background: #C5BFFF;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(197, 191, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.settingGroup input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(197, 191, 255, 0.6);
+}
+
+.settingGroup input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  background: #C5BFFF;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 8px rgba(197, 191, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.settingGroup input[type="range"]::-moz-range-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 4px 12px rgba(197, 191, 255, 0.6);
+}
+
+.instructionsPanel {
+  background: rgba(26, 26, 46, 0.9);
+  backdrop-filter: blur(20px);
+  border: 2px solid rgba(171, 147, 255, 0.3);
+  border-radius: 20px;
+  padding: 2rem;
+  margin: 1rem 0;
+  max-width: 600px;
+  width: 100%;
+  z-index: 10;
+  position: relative;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.instructionsPanel h3 {
+  color: #AB93FF;
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  text-shadow: 0 0 10px rgba(171, 147, 255, 0.5);
+}
+
+.instructionsPanel ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.instructionsPanel li {
+  color: #C5BFFF;
+  margin-bottom: 0.8rem;
+  padding-left: 1.5rem;
+  position: relative;
+  font-size: 0.95rem;
+  line-height: 1.4;
+}
+
+.instructionsPanel li::before {
+  content: '✦';
+  position: absolute;
+  left: 0;
+  color: #AB93FF;
+  font-size: 0.8rem;
 } 

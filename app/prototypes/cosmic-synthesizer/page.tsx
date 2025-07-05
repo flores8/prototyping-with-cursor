@@ -25,12 +25,37 @@ interface AudioData {
   timestamp: number;
 }
 
+interface SoundSettings {
+  waveform: OscillatorType;
+  filterType: BiquadFilterType;
+  filterFrequency: number;
+  filterQ: number;
+  attack: number;
+  decay: number;
+  sustain: number;
+  release: number;
+}
+
 export default function CosmicSynthesizer() {
   const [activeKeys, setActiveKeys] = useState<Set<string>>(new Set());
   const [particles, setParticles] = useState<Particle[]>([]);
   const [isPlaying, setIsPlaying] = useState(false);
+  const [showSettings, setShowSettings] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(false);
+  const [soundSettings, setSoundSettings] = useState<SoundSettings>({
+    waveform: 'sine',
+    filterType: 'lowpass',
+    filterFrequency: 2000,
+    filterQ: 1,
+    attack: 0.01,
+    decay: 0.5,
+    sustain: 0.3,
+    release: 2
+  });
+  
   const audioContextRef = useRef<AudioContext | null>(null);
   const oscillatorsRef = useRef<Map<string, OscillatorNode>>(new Map());
+  const filtersRef = useRef<Map<string, BiquadFilterNode>>(new Map());
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const waveformCanvasRef = useRef<HTMLCanvasElement>(null);
   const animationFrameRef = useRef<number | undefined>(undefined);
@@ -287,33 +312,42 @@ export default function CosmicSynthesizer() {
     setParticles(prev => [...prev, ...newParticles]);
   };
 
-
-
   const playNote = (key: Key) => {
     if (!audioContextRef.current || !analyserRef.current) return;
 
     const oscillator = audioContextRef.current.createOscillator();
     const gainNode = audioContextRef.current.createGain();
+    const filter = audioContextRef.current.createBiquadFilter();
     
-    oscillator.connect(gainNode);
+    // Configure filter
+    filter.type = soundSettings.filterType;
+    filter.frequency.setValueAtTime(soundSettings.filterFrequency, audioContextRef.current.currentTime);
+    filter.Q.setValueAtTime(soundSettings.filterQ, audioContextRef.current.currentTime);
+    
+    // Connect audio chain
+    oscillator.connect(filter);
+    filter.connect(gainNode);
     gainNode.connect(analyserRef.current);
     analyserRef.current.connect(audioContextRef.current.destination);
     
+    // Configure oscillator
     oscillator.frequency.setValueAtTime(key.frequency, audioContextRef.current.currentTime);
-    oscillator.type = 'sine';
+    oscillator.type = soundSettings.waveform;
     
-    gainNode.gain.setValueAtTime(0, audioContextRef.current.currentTime);
-    gainNode.gain.linearRampToValueAtTime(0.3, audioContextRef.current.currentTime + 0.01);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContextRef.current.currentTime + 2);
+    // Configure envelope (ADSR)
+    const now = audioContextRef.current.currentTime;
+    gainNode.gain.setValueAtTime(0, now);
+    gainNode.gain.linearRampToValueAtTime(soundSettings.sustain, now + soundSettings.attack);
+    gainNode.gain.linearRampToValueAtTime(soundSettings.sustain * 0.1, now + soundSettings.attack + soundSettings.decay);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, now + soundSettings.attack + soundSettings.decay + soundSettings.release);
     
     oscillator.start();
-    oscillator.stop(audioContextRef.current.currentTime + 2);
+    oscillator.stop(now + soundSettings.attack + soundSettings.decay + soundSettings.release);
     
     oscillatorsRef.current.set(key.note, oscillator);
+    filtersRef.current.set(key.note, filter);
     setActiveKeys(prev => new Set([...prev, key.note]));
     setIsPlaying(true);
-    
-
     
     // Create particles at the key position
     const keyElement = document.querySelector(`[data-note="${key.note}"]`) as HTMLElement;
@@ -330,10 +364,16 @@ export default function CosmicSynthesizer() {
 
   const stopNote = (key: Key) => {
     const oscillator = oscillatorsRef.current.get(key.note);
+    const filter = filtersRef.current.get(key.note);
+    
     if (oscillator) {
       oscillator.stop();
       oscillatorsRef.current.delete(key.note);
     }
+    if (filter) {
+      filtersRef.current.delete(key.note);
+    }
+    
     setActiveKeys(prev => {
       const newSet = new Set(prev);
       newSet.delete(key.note);
@@ -450,19 +490,157 @@ export default function CosmicSynthesizer() {
             <div className={styles.idleIndicator}>Ready to play</div>
           )}
         </div>
+        
+        <div className={styles.controlButtons}>
+          <button 
+            className={styles.settingsButton}
+            onClick={() => setShowSettings(!showSettings)}
+          >
+            {showSettings ? 'Hide' : 'Show'} Sound Settings
+          </button>
+          
+          <button 
+            className={styles.instructionsButton}
+            onClick={() => setShowInstructions(!showInstructions)}
+          >
+            {showInstructions ? 'Hide' : 'Show'} How to Play
+          </button>
+        </div>
       </div>
 
-      <div className={styles.instructions}>
-        <h3>How to play:</h3>
-        <ul>
-          <li>Click or tap the floating keys</li>
-          <li>Lower octave (C3-B3): Use number keys 1-8 and symbols !@#$%</li>
-          <li>Middle octave (C4-C5): Use letter keys A-L and W-U</li>
-          <li>Watch the cosmic particles dance</li>
-          <li>See the waveform visualization above</li>
-          <li>Create your own ethereal melodies across two octaves</li>
-        </ul>
-      </div>
+      {showSettings && (
+        <div className={styles.settingsPanel}>
+          <h3>Sound Settings</h3>
+          
+          <div className={styles.settingGroup}>
+            <label>
+              Waveform:
+              <select 
+                value={soundSettings.waveform}
+                onChange={(e) => setSoundSettings(prev => ({ ...prev, waveform: e.target.value as OscillatorType }))}
+              >
+                <option value="sine">Sine (Smooth)</option>
+                <option value="square">Square (Harsh)</option>
+                <option value="sawtooth">Sawtooth (Bright)</option>
+                <option value="triangle">Triangle (Mellow)</option>
+              </select>
+            </label>
+          </div>
+
+          <div className={styles.settingGroup}>
+            <label>
+              Filter Type:
+              <select 
+                value={soundSettings.filterType}
+                onChange={(e) => setSoundSettings(prev => ({ ...prev, filterType: e.target.value as BiquadFilterType }))}
+              >
+                <option value="lowpass">Low Pass (Warm)</option>
+                <option value="highpass">High Pass (Bright)</option>
+                <option value="bandpass">Band Pass (Focused)</option>
+                <option value="notch">Notch (Hollow)</option>
+              </select>
+            </label>
+          </div>
+
+          <div className={styles.settingGroup}>
+            <label>
+              Filter Frequency: {soundSettings.filterFrequency}Hz
+              <input 
+                type="range" 
+                min="20" 
+                max="20000" 
+                value={soundSettings.filterFrequency}
+                onChange={(e) => setSoundSettings(prev => ({ ...prev, filterFrequency: Number(e.target.value) }))}
+              />
+            </label>
+          </div>
+
+          <div className={styles.settingGroup}>
+            <label>
+              Filter Resonance: {soundSettings.filterQ}
+              <input 
+                type="range" 
+                min="0.1" 
+                max="10" 
+                step="0.1"
+                value={soundSettings.filterQ}
+                onChange={(e) => setSoundSettings(prev => ({ ...prev, filterQ: Number(e.target.value) }))}
+              />
+            </label>
+          </div>
+
+          <div className={styles.settingGroup}>
+            <label>
+              Attack: {soundSettings.attack}s
+              <input 
+                type="range" 
+                min="0.001" 
+                max="2" 
+                step="0.01"
+                value={soundSettings.attack}
+                onChange={(e) => setSoundSettings(prev => ({ ...prev, attack: Number(e.target.value) }))}
+              />
+            </label>
+          </div>
+
+          <div className={styles.settingGroup}>
+            <label>
+              Decay: {soundSettings.decay}s
+              <input 
+                type="range" 
+                min="0.01" 
+                max="2" 
+                step="0.01"
+                value={soundSettings.decay}
+                onChange={(e) => setSoundSettings(prev => ({ ...prev, decay: Number(e.target.value) }))}
+              />
+            </label>
+          </div>
+
+          <div className={styles.settingGroup}>
+            <label>
+              Sustain: {soundSettings.sustain}
+              <input 
+                type="range" 
+                min="0" 
+                max="1" 
+                step="0.01"
+                value={soundSettings.sustain}
+                onChange={(e) => setSoundSettings(prev => ({ ...prev, sustain: Number(e.target.value) }))}
+              />
+            </label>
+          </div>
+
+          <div className={styles.settingGroup}>
+            <label>
+              Release: {soundSettings.release}s
+              <input 
+                type="range" 
+                min="0.01" 
+                max="5" 
+                step="0.01"
+                value={soundSettings.release}
+                onChange={(e) => setSoundSettings(prev => ({ ...prev, release: Number(e.target.value) }))}
+              />
+            </label>
+          </div>
+        </div>
+      )}
+
+      {showInstructions && (
+        <div className={styles.instructionsPanel}>
+          <h3>How to Play</h3>
+          <ul>
+            <li>Click or tap the floating keys</li>
+            <li>Lower octave (C3-B3): Use number keys 1-8 and symbols !@#$%</li>
+            <li>Middle octave (C4-C5): Use letter keys A-L and W-U</li>
+            <li>Watch the cosmic particles dance</li>
+            <li>See the waveform visualization above</li>
+            <li>Create your own ethereal melodies across two octaves</li>
+            <li>Experiment with sound settings for different tones</li>
+          </ul>
+        </div>
+      )}
     </div>
   );
 } 
