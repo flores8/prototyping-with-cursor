@@ -13,16 +13,16 @@ import styles from './styles.module.css';
 
 export default function TypographyExperiments() {
   const [inputText, setInputText] = useState('Type something magical here');
-  const [selectedEffect, setSelectedEffect] = useState('wavy');
+  const [selectedEffect, setSelectedEffect] = useState('neon');
 
   const effects = [
-    { id: 'wavy', name: 'Wavy Text' },
-    { id: 'circular', name: 'Circular Text' },
-    { id: 'skewed', name: '3D Skewed' },
-    { id: 'gradient', name: 'Gradient Text' },
-    { id: 'glitch', name: 'Glitch Effect' },
     { id: 'neon', name: 'Neon Glow' },
     { id: 'typewriter', name: 'Typewriter' },
+    { id: 'skewed', name: '3D Skewed' },
+    { id: 'gradient', name: 'Gradient Text' },
+    { id: 'wavy', name: 'Wavy Text' },
+    { id: 'circular', name: 'Circular Text' },
+    { id: 'glitch', name: 'Glitch Effect' },
     { id: 'holographic', name: 'Holographic' },
     { id: 'matrix', name: 'Matrix Rain' },
     { id: 'bubble', name: 'Bubble Text' },
