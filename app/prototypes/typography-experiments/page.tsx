@@ -485,26 +485,6 @@ export default function TypographyExperiments() {
         </div>
       </div>
 
-      {showCSS && (
-        <div className={styles.cssCodeContainer}>
-          <div className={styles.cssCodeHeader}>
-            <div className={styles.cssCodeHeaderContent}>
-              <h3>CSS Code for "{effects.find(e => e.id === selectedEffect)?.name}" Effect</h3>
-              <p>Copy this CSS to recreate the effect in your own project!</p>
-            </div>
-            <button
-              onClick={() => copyToClipboard(cssCode[selectedEffect as keyof typeof cssCode])}
-              className={styles.copyButton}
-            >
-              {copyStatus || 'Copy CSS'}
-            </button>
-          </div>
-          <pre className={styles.cssCode}>
-            <code>{cssCode[selectedEffect as keyof typeof cssCode]}</code>
-          </pre>
-        </div>
-      )}
-
       <main className={styles.main}>
         <div className={styles.typographyDisplay}>
           {selectedEffect === 'wavy' && (
@@ -648,6 +628,26 @@ export default function TypographyExperiments() {
           )}
         </div>
       </main>
+
+      {showCSS && (
+        <div className={styles.cssCodeContainer}>
+          <div className={styles.cssCodeHeader}>
+            <div className={styles.cssCodeHeaderContent}>
+              <h3>CSS Code for "{effects.find(e => e.id === selectedEffect)?.name}" Effect</h3>
+              <p>Copy this CSS to recreate the effect in your own project!</p>
+            </div>
+            <button
+              onClick={() => copyToClipboard(cssCode[selectedEffect as keyof typeof cssCode])}
+              className={styles.copyButton}
+            >
+              {copyStatus || 'Copy CSS'}
+            </button>
+          </div>
+          <pre className={styles.cssCode}>
+            <code>{cssCode[selectedEffect as keyof typeof cssCode]}</code>
+          </pre>
+        </div>
+      )}
 
       <footer className={styles.footer}>
         <p>Experiment with different effects and see how CSS transforms your text!</p>
