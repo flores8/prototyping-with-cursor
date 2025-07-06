@@ -496,6 +496,10 @@ export default function TypographyExperiments() {
 
   return (
     <div className={styles.container}>
+      <Link href="/" className={styles.backButton}>
+        ← Back to Home
+      </Link>
+      
       <header className={styles.header}>
         <h1 className={styles.skewedHeading}>Lauralee's typography experiments</h1>
       </header>
