@@ -47,6 +47,8 @@ body {
   font-family: var(--font-body);
   background-color: rgb(var(--background-rgb));
   color: rgb(var(--foreground-rgb));
+  background: #0a1624 !important;
+  color: #b8f6ff;
 }
 
 /* Improve media defaults */

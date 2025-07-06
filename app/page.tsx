@@ -24,6 +24,11 @@ export default function Home() {
       description: 'Interactive typography generator with wavy text, circular layouts, and 3D effects',
       path: '/prototypes/typography-experiments'
     },
+    {
+      title: 'Noted OS',
+      description: 'A classic operating system-inspired note-taking app with draggable windows, text notes, and drawing canvas',
+      path: '/prototypes/noted-os'
+    },
     // Add your new prototypes here like this:
     // {
     //   title: 'Your new prototype',
@@ -34,9 +39,17 @@ export default function Home() {
 
   return (
     <div className={styles.container}>
+      {/* CRT scanline overlay for retro effect */}
+      <div style={{
+        pointerEvents: 'none',
+        position: 'absolute',
+        top: 0, left: 0, right: 0, bottom: 0,
+        zIndex: 10,
+        background: 'repeating-linear-gradient(to bottom, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 2px, transparent 4px)'
+      }} aria-hidden="true" />
       <header className={styles.header}>
-        <h1>Lauralee's prototypes</h1>
-        <p className={styles.subtitle}>
+        <h1 style={{ fontFamily: 'Menlo, Fira Mono, Consolas, monospace' }}>Lauralee's prototypes</h1>
+        <p className={styles.subtitle} style={{ fontFamily: 'Menlo, Fira Mono, Consolas, monospace' }}>
           A curated collection of interactive prototypes exploring design, technology, and user experience.
         </p>
       </header>
@@ -49,6 +62,7 @@ export default function Home() {
               key={index}
               href={prototype.path} 
               className={styles.card}
+              style={{ fontFamily: 'Menlo, Fira Mono, Consolas, monospace' }}
             >
               <h3>{prototype.title}</h3>
               <p>{prototype.description}</p>
